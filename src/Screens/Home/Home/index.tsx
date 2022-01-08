@@ -3,9 +3,9 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
 import { Button } from "react-native";
 import Styled from "styled-components/native";
+import TestBlank from "./TestBlank";
 
 const Container = Styled.View`
-    height: 60%;
     background-color:#CCFFCC;
 `;
 const Text = Styled.Text`
@@ -16,7 +16,10 @@ const Btn = Styled.TouchableOpacity`
 
 `;
 
+
+
 type Props = NativeStackScreenProps<StackNaviParamList_Home,"Main">;
+
 
 const Home = ({navigation}:Props) => {
     return(
@@ -28,7 +31,7 @@ const Home = ({navigation}:Props) => {
             <Text>Hi</Text>
             <Text>Hi</Text>
             <Text>Hi</Text>
-            <Text>Hi</Text>
+            <TestBlank/>
         </Container>
     );
 }

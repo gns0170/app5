@@ -15,7 +15,7 @@ type Props = NativeStackScreenProps<StackNaviParamList_Another,"Main">
 const Another = ({navigation}:Props) => {
     return(
         <Container>
-            <Button title="detail1 "height="30"onPress={()=>navigation.navigate("Detail1")}/>
+            <Button title="detail1" onPress={()=>navigation.navigate("Detail1")}/>
             <Text>Hi</Text>
             <Button title="detail2" onPress={()=>navigation.navigate("Detail2")}/>
         </Container>

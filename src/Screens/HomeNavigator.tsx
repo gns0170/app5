@@ -1,7 +1,7 @@
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
 import Styled from "styled-components/native";
-import Home from "~/Screens/Home";
+import Home from "~/Screens/Home/Home";
 import HomeDetail1 from "~/Screens/Home/HomeDetail1";
 import HomeDetail2 from "~/Screens/Home/HomeDetail2";
 
