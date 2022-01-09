@@ -27,10 +27,7 @@ const Home = ({navigation}:Props) => {
             <Button title="detail1" onPress={()=>navigation.navigate("Detail1")}/>
             <Text>Hi</Text>
             <Button title="detail2" onPress={()=>navigation.navigate("Detail2")}/>
-            <Text>Hi</Text>
-            <Text>Hi</Text>
-            <Text>Hi</Text>
-            <Text>Hi</Text>
+
             <TestBlank/>
         </Container>
     );
