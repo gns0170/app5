@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Alert } from "react-native";
+import { identifier } from "@babel/types";
+import React, { SetStateAction, useEffect, useState } from "react";
+import { Alert, PushNotificationIOS } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import Styled from "styled-components/native";
 
+
 const OuterContainer = Styled.View`
+    height: 52%;
     border: solid;
     margin-horizontal: 10px;
 `;
@@ -11,7 +14,9 @@ const Container = Styled.View`
     display:flex;    
     padding-top:10px;
     height: 100px;
-    margin-right:10px;
+    width: 100%;
+    padding-left: 6px;
+    border: 0.5px solid;
     background-color: #EFEF11;
 `;
 const Text =Styled.Text`
@@ -23,14 +28,14 @@ const TextBody = Styled.Text`
 `;
 
 
-interface Props{
-    item: {
+
+type item = {
         id : string,
         userId : string,
         title: string,
         body: string,
     };
-}
+interface Props{item : item,}
 const renderItem = ({item}:Props) => {
     return(
         //<Outer>
@@ -42,28 +47,37 @@ const renderItem = ({item}:Props) => {
                 {item.title}
             </Text>
             <TextBody>
-                {item.title}
+                {item.body}
             </TextBody>
         </Container>
         //</Outer>
     );
 }
 
+const AsyncStorage = ()=> {
+
+};
+
 const TestBlank = ()=> {
 
-    const [data,setData] = useState([]);
+    const [data,setData] = useState<item[]>([]);
     const [loading, setLoading] = useState(false);
 
-    const getData = () => {
+    const getData = async() => {
+
+        setData([]);
         setLoading(true);
-    fetch('https://jsonplaceholder.typicode.com/posts')
-        .then(response => response.json())
-        .then(res => setData(res))
-    
-    .catch((error)=>{
-        setLoading(false);
-        Alert.alert("Error");
-    })
+        for (let i=1; i< 11;i++)
+        await fetch(`https://jsonplaceholder.typicode.com/posts/${i}`)
+            .then(response => response.json())
+            .then(res => setData((oldArray) =>[...oldArray,res]))
+        .catch((error)=>{
+            setLoading(false);
+            Alert.alert("Error");
+        })
+
+        
+
     };
 
     useEffect(()=> {
@@ -81,10 +95,10 @@ const TestBlank = ()=> {
     return(
         <OuterContainer>
             <FlatList
-                horizontal={true}
                 data={data}
                 renderItem={renderItem}
                 keyExtractor={item=>item.id}
+                numColumns={1}
                 onEndReached={onEndReached}
             />
         </OuterContainer>
