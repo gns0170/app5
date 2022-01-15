@@ -2,8 +2,7 @@ import React, { SetStateAction, useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import Styled from "styled-components/native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { NullableTypeAnnotation } from "@babel/types";
+import { StorageTest } from "~/Contexts/AsyncStorage";
 
 const OuterContainer = Styled.View`
     margin-vertical:15px;
@@ -59,12 +58,11 @@ const TestBlank = ()=> {
     const [data,setData] = useState<item[]>([]);
     const [loading, setLoading] = useState(false);
 
-    const [test, setTest] = useState<any>([]);
     const getData = async() => {
 
         setData([]);
         setLoading(true);
-        for (let i=1; i< 3;i++)
+        for (let i=1; i< 5;i++)
         await fetch(`https://jsonplaceholder.typicode.com/posts/${i}`)
             .then(response => response.json())
             .then(res => setData((oldArray) =>[...oldArray,res]))
@@ -73,31 +71,11 @@ const TestBlank = ()=> {
             Alert.alert("Error");
         })
 
-
     };
 
-    //AsyncStorage
 
-    const getAsyncData =async () => {
-        try{
-            return await AsyncStorage.getItem('1').then((res)=>{ setTest(res); console.log(res); return res;})
-        } catch (e){
-        }
-    }
-    const setAsyncData = async(value: string) => {
-        try {
-            //const jsonValue = JSON.stringify(value)
-            //await AsyncStorage.setItem('@storage_Key',jsonValue)
-            await AsyncStorage.setItem('1',value,()=>{
-                console.log("done",value);
-            })
-        }catch(e){}
-    }    
     useEffect(()=> {
         getData();
-    },[]);
-    useEffect(()=>{
-        getAsyncData();
     },[]);
 
     const onEndReached = () => {
@@ -112,14 +90,16 @@ const TestBlank = ()=> {
         <OuterContainer>
             <FlatList
                 data={data}
+                pagingEnabled={true}
                 renderItem={renderItem}
                 keyExtractor={item=>item.id}
                 numColumns={1}
                 onEndReached={onEndReached}
             />
-            <Button title={"Test"} onPress={()=> {setAsyncData("456"); getAsyncData()}}/>
-            <Button title={"getData"} onPress={()=> {getAsyncData()}}/>
-            <Text>{test}</Text>
+            <Button title={"Test"} onPress={()=> {}}/>
+
+            <Button title={"get Data"} onPress={()=> {}}/>
+            <Text>{}</Text>
         </OuterContainer>
     );
 }
